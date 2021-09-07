@@ -7,9 +7,15 @@ const Register = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
+    // =======================================================================================
+    // Prevent browser from auto reload
+    // =======================================================================================
     e.preventDefault();
     const config = {
       url: "http://localhost:3000/register/complete",
+      // =====================================================================================
+      // User starts registration in one device but cannot finish it in another device
+      // =====================================================================================
       handleCodeInApp: true,
     };
 
@@ -17,8 +23,14 @@ const Register = () => {
     toast.success(
       `Email is send to ${email}. Click the link to complete your registration.`
     );
-
-    // save user email in localstorage
+    // =====================================================================================
+    // Save user email in local storage
+    // =====================================================================================
+    window.localStorage.setItem("emailForRegistration", email);
+    // =====================================================================================
+    // Clear state
+    // =====================================================================================
+    setEmail("");
   };
 
   const registerForm = () => (
@@ -41,6 +53,7 @@ const Register = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h4>Register</h4>
+          <ToastContainer />
           {registerForm()}
         </div>
       </div>
